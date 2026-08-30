@@ -1,5 +1,8 @@
 -- create react app using vite
 -- configure tailwindCSS
+--Header
+--Login Form
+--Sign Up Form
 
 # Features
 -Login / Sign up Page
