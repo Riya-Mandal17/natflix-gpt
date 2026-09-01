@@ -1,8 +1,11 @@
--- create react app using vite
--- configure tailwindCSS
---Header
---Login Form
---Sign Up Form
+- create react app using vite
+- configure tailwindCSS
+- Routing
+- Header
+- Login Form
+- Sign Up Form
+- Form Validation
+- useRef Hook
 
 # Features
 -Login / Sign up Page
