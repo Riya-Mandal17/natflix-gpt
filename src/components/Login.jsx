@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [isSignIn, setSignIn] = useState(true);
@@ -12,6 +13,7 @@ const Login = () => {
     const password = useRef(null);
     const name = useRef(null);
     const [errorMessage, setErrorMessage] = useState(null);
+    const navigate = useNavigate();
 
     const handleButtonClick = () => {
         //validate my data
@@ -32,21 +34,22 @@ const Login = () => {
             createUserWithEmailAndPassword(
                 auth,
                 email.current.value,
-                password.current.value
+                password.current.value,
             )
                 .then((userCredential) => {
                     // Signed up
                     const user = userCredential.user;
-                        return updateProfile(user, {
-                        displayName: name.current.value
+                    return updateProfile(user, {
+                        displayName: name.current.value,
                     });
                 })
                 .then(() => {
                     console.log("User created successfully");
                     console.log(auth.currentUser);
+                    navigate("/browse");
                 })
                 // })
-                
+
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
@@ -54,17 +57,22 @@ const Login = () => {
                 });
         } else {
             //Sign In Logic
-            signInWithEmailAndPassword(auth, email.current.value,
-                password.current.value)
+            signInWithEmailAndPassword(
+                auth,
+                email.current.value,
+                password.current.value,
+            )
                 .then((userCredential) => {
                     // Signed in
                     const user = userCredential.user;
                     console.log("user");
+                    navigate("/browse");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-                    console.log(errorCode + ": " + errorMessage);
+                    setErrorMessage(errorCode + ": " + errorMessage);
+                    
                 });
         }
     };
@@ -124,7 +132,7 @@ const Login = () => {
                 <p className="cursor-pointer p-4" onClick={toggleSignInForm}>
                     {isSignIn
                         ? "Do you have an account? Sign Up now"
-                        : "Have you already an account? Sign In "}{" "}
+                        : "Have you already an account? Sign In "}
                 </p>
             </form>
         </div>

@@ -6,6 +6,10 @@
 - Sign Up Form
 - Form Validation
 - useRef Hook
+- Firebase setup
+- Authentication
+- redux toolkit
+- created Redux Store using userSlice
 
 # Features
 -Login / Sign up Page
