@@ -10,6 +10,8 @@
 - Authentication
 - redux toolkit
 - created Redux Store using userSlice
+- Sign In 
+- Sign out
 
 # Features
 -Login / Sign up Page

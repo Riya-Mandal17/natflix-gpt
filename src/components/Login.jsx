@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Login = () => {
     const [isSignIn, setSignIn] = useState(true);
@@ -14,6 +15,7 @@ const Login = () => {
     const name = useRef(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
+    
 
     const handleButtonClick = () => {
         //validate my data
@@ -44,11 +46,20 @@ const Login = () => {
                     });
                 })
                 .then(() => {
-                    console.log("User created successfully");
-                    console.log(auth.currentUser);
-                    navigate("/browse");
+                    updateProfile(auth.currentUser, {
+                        displayName: name.current.value,
+                        photoURL: "https://avatars.githubusercontent.com/u/173079030?s=96&v=4",
+                    })
+                        .then(() => {
+                           navigate("/browse");
+                        })
+                        .catch((error) => {
+                            setErrorMessage(error);
+                        });
+
+                    
                 })
-                // })
+                
 
                 .catch((error) => {
                     const errorCode = error.code;
@@ -72,7 +83,6 @@ const Login = () => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     setErrorMessage(errorCode + ": " + errorMessage);
-                    
                 });
         }
     };
